@@ -4,9 +4,8 @@
     | |/ |/ / / _ \/ _  / /_/ // /  
     |__/|__/_/_//_/\_,_/\____/___/
     
-    v1.6.57  |  2025-10-27  |  Roblox UI Library for scripts
+    v1.6.62  |  2025-12-09  |  Roblox UI Library for scripts
     
-    This script is NOT intended to be modified.
     To view the source code, see the `src/` folder on the official GitHub repository.
     
     Author: Footagesus (Footages, .ftgs, oftgs)
@@ -16,17 +15,28 @@
 ]]
 
 local a a={cache={}, load=function(b)if not a.cache[b]then a.cache[b]={c=a[b]()}end return a.cache[b].c end}do function a.a()return{
+
+
+Primary=Color3.fromHex"#0091FF",
+
+White=Color3.new(1,1,1),
+Black=Color3.new(0,0,0),
+
 Dialog="Accent",
 
 Background="Accent",
+BackgroundTransparency=0,
 Hover="Text",
 
 WindowBackground="Background",
 
-TopbarButtonIcon="Icon",
-TopbarTitle="Text",
-TopbarAuthor="Text",
-TopbarIcon="Text",
+WindowShadow="Black",
+
+
+WindowTopbarTitle="Text",
+WindowTopbarAuthor="Text",
+WindowTopbarIcon="Icon",
+WindowTopbarButtonIcon="Icon",
 
 TabBackground="Hover",
 TabTitle="Text",
@@ -36,31 +46,63 @@ ElementBackground="Text",
 ElementTitle="Text",
 ElementDesc="Text",
 ElementIcon="Icon",
+
+PopupBackground="Background",
+PopupBackgroundTransparency="BackgroundTransparency",
+PopupTitle="Text",
+PopupContent="Text",
+PopupIcon="Icon",
+
+DialogBackground="Background",
+DialogBackgroundTransparency="BackgroundTransparency",
+DialogTitle="Text",
+DialogContent="Text",
+DialogIcon="Icon",
+
+Toggle="Button",
+ToggleBar="White",
+
+Checkbox="Primary",
+CheckboxIcon="White",
+
+Slider="Primary",
+SliderThumb="White",
+SliderIconFrom=Color3.fromHex"#908F95",
+SliderIconTo=Color3.fromHex"#908F95",
+
+Tooltip=Color3.fromHex"4C4C4C",
+TooltipText="White",
+TooltipSecondary="Primary",
+TooltipSecondaryText="White",
 }end function a.b()
-local b=game:GetService"RunService"local d=
-b.Heartbeat
-local e=game:GetService"UserInputService"
-local f=game:GetService"TweenService"
-local g=game:GetService"LocalizationService"
-local h=game:GetService"HttpService"
 
-local i="https://raw.githubusercontent.com/Footagesus/Icons/main/Main-v2.lua"
+local b=(cloneref or clonereference or function(b)return b end)
 
-local j=loadstring(
-game.HttpGetAsync and game:HttpGetAsync(i)
-or h:GetAsync(i)
+local d=b(game:GetService"RunService")
+local e=b(game:GetService"UserInputService")
+local f=b(game:GetService"TweenService")
+local g=b(game:GetService"LocalizationService")
+local h=b(game:GetService"HttpService")local i=
+
+d.Heartbeat
+
+local j="https://raw.githubusercontent.com/Footagesus/Icons/main/Main-v2.lua"
+
+local l=loadstring(
+game.HttpGetAsync and game:HttpGetAsync(j)
+or h:GetAsync(j)
 )()
-j.SetIconsType"lucide"
+l.SetIconsType"lucide"
 
-local l
+local m
 
-local m={
+local p={
 Font="rbxassetid://12187365364",
 Localization=nil,
 CanDraggable=true,
 Theme=nil,
 Themes=nil,
-Icons=j,
+Icons=l,
 Signals={},
 Objects={},
 LocalizationObjects={},
@@ -132,445 +174,382 @@ Blue="#039be5",
 White="#ffffff",
 Grey="#484848",
 },
-ThemeFallbacks=a.load'a'
+ThemeFallbacks=a.load'a',
+Shapes={
+Square="rbxassetid://82909646051652",
+["Square-Outline"]="rbxassetid://72946211851948",
+
+Squircle="rbxassetid://80999662900595",
+SquircleOutline="rbxassetid://117788349049947",
+["Squircle-Outline"]="rbxassetid://117817408534198",
+
+SquircleOutline2="rbxassetid://117817408534198",
+
+["Shadow-sm"]="rbxassetid://84825982946844",
+
+["Squircle-TL-TR"]="rbxassetid://73569156276236",
+["Squircle-BL-BR"]="rbxassetid://93853842912264",
+["Squircle-TL-TR-Outline"]="rbxassetid://136702870075563",
+["Squircle-BL-BR-Outline"]="rbxassetid://75035847706564",
+}
 }
 
-function m.Init(p)
-l=p
+function p.Init(r)
+m=r
 end
 
-function m.AddSignal(p,r)
-local u=p:Connect(r)
-table.insert(m.Signals,u)
-return u
+function p.AddSignal(r,u)
+local v=r:Connect(u)
+table.insert(p.Signals,v)
+return v
 end
 
-function m.DisconnectAll()
-for p,r in next,m.Signals do
-local u=table.remove(m.Signals,p)
-u:Disconnect()
+function p.DisconnectAll()
+for r,u in next,p.Signals do
+local v=table.remove(p.Signals,r)
+v:Disconnect()
 end
 end
 
-function m.SafeCallback(p,...)
-if not p then
+function p.SafeCallback(r,...)
+if not r then
 return
 end
 
-local r,u=pcall(p,...)
-if not r then
-if l and l.Window and l.Window.Debug then local
-v, x=u:find":%d+: "
+local u,v=pcall(r,...)
+if not u then
+if m and m.Window and m.Window.Debug then local
+x, z=v:find":%d+: "
 
-warn("[ WindUI: DEBUG Mode ] "..u)
+warn("[ WindUI: DEBUG Mode ] "..v)
 
-return l:Notify{
+return m:Notify{
 Title="DEBUG Mode: Error",
-Content=not x and u or u:sub(x+1),
+Content=not z and v or v:sub(z+1),
 Duration=8,
 }
 end
 end
 end
 
-function m.Gradient(p,r)
-if l and l.Gradient then
-return l:Gradient(p,r)
+function p.Gradient(r,u)
+if m and m.Gradient then
+return m:Gradient(r,u)
 end
 
-local u={}
 local v={}
+local x={}
 
-for x,z in next,p do
-local A=tonumber(x)
-if A then
-A=math.clamp(A/100,0,1)
-table.insert(u,ColorSequenceKeypoint.new(A,z.Color))
-table.insert(v,NumberSequenceKeypoint.new(A,z.Transparency or 0))
+for z,A in next,r do
+local B=tonumber(z)
+if B then
+B=math.clamp(B/100,0,1)
+table.insert(v,ColorSequenceKeypoint.new(B,A.Color))
+table.insert(x,NumberSequenceKeypoint.new(B,A.Transparency or 0))
 end
 end
 
-table.sort(u,function(A,B)return A.Time<B.Time end)
-table.sort(v,function(A,B)return A.Time<B.Time end)
+table.sort(v,function(B,C)return B.Time<C.Time end)
+table.sort(x,function(B,C)return B.Time<C.Time end)
 
-if#u<2 then
+if#v<2 then
 error"ColorSequence requires at least 2 keypoints"
 end
 
-local A={
-Color=ColorSequence.new(u),
-Transparency=NumberSequence.new(v),
+local B={
+Color=ColorSequence.new(v),
+Transparency=NumberSequence.new(x),
 }
 
-if r then
-for B,C in pairs(r)do
-A[B]=C
-end
-end
-
-return A
-end
-
-function m.SetTheme(p)
-m.Theme=p
-m.UpdateTheme(nil,true)
-end
-
-function m.AddFontObject(p)
-table.insert(m.FontObjects,p)
-m.UpdateFont(m.Font)
-end
-
-function m.UpdateFont(p)
-m.Font=p
-for r,u in next,m.FontObjects do
-u.FontFace=Font.new(p,u.FontFace.Weight,u.FontFace.Style)
-end
-end
-
-function m.GetThemeProperty(p,r)
-local function getValue(u,v)
-local x=v[u]
-
-if not x then return nil end
-
-if type(x)=="string"and string.sub(x,1,1)=="#"then
-return Color3.fromHex(x)
-end
-
-if typeof(x)=="Color3"then
-return x
-end
-
-if type(x)=="table"and x.Color and x.Transparency then
-return x
-end
-
-if type(x)=="function"then
-return x()
-end
-
-return nil
-end
-
-local u=getValue(p,r)
 if u then
-return u
-end
-
-local v=m.ThemeFallbacks[p]
-if v then
-u=getValue(v,r)
-if u then
-return u
+for C,F in pairs(u)do
+B[C]=F
 end
 end
 
-u=getValue(p,m.Themes.Dark)
-if u then
-return u
+return B
 end
 
-if v then
-u=getValue(v,m.Themes.Dark)
-if u then
-return u
+function p.SetTheme(r)
+p.Theme=r
+p.UpdateTheme(nil,false)
+end
+
+function p.AddFontObject(r)
+table.insert(p.FontObjects,r)
+p.UpdateFont(p.Font)
+end
+
+function p.UpdateFont(r)
+p.Font=r
+for u,v in next,p.FontObjects do
+v.FontFace=Font.new(r,v.FontFace.Weight,v.FontFace.Style)
 end
 end
 
-return nil
+function p.GetThemeProperty(r,u)
+local function getValue(v,x)
+local z=x[v]
+
+if z==nil then return nil end
+
+if typeof(z)=="string"and string.sub(z,1,1)=="#"then
+return Color3.fromHex(z)
 end
 
-function m.AddThemeObject(p,r)
-m.Objects[p]={Object=p,Properties=r}
-m.UpdateTheme(p,false)
-return p
-end
-
-function m.AddLangObject(p)
-local r=m.LocalizationObjects[p]
-local u=r.Object
-local v=currentObjTranslationId
-m.UpdateLang(u,v)
-return u
-end
-
-function m.UpdateTheme(p,r)
-local function ApplyTheme(u)
-for v,x in pairs(u.Properties or{})do
-local z=m.GetThemeProperty(x,m.Theme)
-if z then
 if typeof(z)=="Color3"then
-local A=u.Object:FindFirstChild"WindUIGradient"
-if A then
-A:Destroy()
+return z
 end
 
-if not r then
-u.Object[v]=z
-else
-m.Tween(u.Object,0.08,{[v]=z}):Play()
-end
-elseif type(z)=="table"and z.Color and z.Transparency then
-u.Object[v]=Color3.new(1,1,1)
-
-local A=u.Object:FindFirstChild"WindUIGradient"
-if not A then
-A=Instance.new"UIGradient"
-A.Name="WindUIGradient"
-A.Parent=u.Object
+if typeof(z)=="number"then
+return z
 end
 
-A.Color=z.Color
-A.Transparency=z.Transparency
+if typeof(z)=="table"and z.Color and z.Transparency then
+return z
+end
 
-for B,C in pairs(z)do
-if B~="Color"and B~="Transparency"and A[B]~=nil then
-A[B]=C
+if typeof(z)=="function"then
+return z()
 end
+
+return z
 end
+
+local v=getValue(r,u)
+if v~=nil then
+if typeof(v)=="string"and string.sub(v,1,1)~="#"then
+local x=p.GetThemeProperty(v,u)
+if x~=nil then
+return x
 end
 else
-local A=u.Object:FindFirstChild"WindUIGradient"
-if A then
-A:Destroy()
+return v
+end
+end
+
+local x=p.ThemeFallbacks[r]
+if x~=nil then
+if typeof(x)=="string"and string.sub(x,1,1)~="#"then
+return p.GetThemeProperty(x,u)
+else
+return getValue(r,{[r]=x})
+end
+end
+
+v=getValue(r,p.Themes.Dark)
+if v~=nil then
+if typeof(v)=="string"and string.sub(v,1,1)~="#"then
+local z=p.GetThemeProperty(v,p.Themes.Dark)
+if z~=nil then
+return z
+end
+else
+return v
+end
+end
+
+if x~=nil then
+if typeof(x)=="string"and string.sub(x,1,1)~="#"then
+return p.GetThemeProperty(x,p.Themes.Dark)
+else
+return getValue(r,{[r]=x})
+end
+end
+
+return nil
+end
+
+function p.AddThemeObject(r,u)
+p.Objects[r]={Object=r,Properties=u}
+p.UpdateTheme(r,false)
+return r
+end
+
+function p.AddLangObject(r)
+local u=p.LocalizationObjects[r]
+local v=u.Object
+local x=currentObjTranslationId
+p.UpdateLang(v,x)
+return v
+end
+
+function p.UpdateTheme(r,u)
+local function ApplyTheme(v)
+for x,z in pairs(v.Properties or{})do
+local A=p.GetThemeProperty(z,p.Theme)
+if A~=nil then
+if typeof(A)=="Color3"then
+local B=v.Object:FindFirstChild"WindUIGradient"
+if B then
+B:Destroy()
+end
+
+if not u then
+v.Object[x]=A
+else
+p.Tween(v.Object,0.08,{[x]=A}):Play()
+end
+elseif typeof(A)=="table"and A.Color and A.Transparency then
+v.Object[x]=Color3.new(1,1,1)
+
+local B=v.Object:FindFirstChild"WindUIGradient"
+if not B then
+B=Instance.new"UIGradient"
+B.Name="WindUIGradient"
+B.Parent=v.Object
+end
+
+B.Color=A.Color
+B.Transparency=A.Transparency
+
+for C,F in pairs(A)do
+if C~="Color"and C~="Transparency"and B[C]~=nil then
+B[C]=F
+end
+end
+elseif typeof(A)=="number"then
+if not u then
+v.Object[x]=A
+else
+p.Tween(v.Object,0.08,{[x]=A}):Play()
+end
+end
+else
+
+local B=v.Object:FindFirstChild"WindUIGradient"
+if B then
+B:Destroy()
 end
 end
 end
 end
 
-if p then
-local u=m.Objects[p]
-if u then
-ApplyTheme(u)
-end
-else
-for u,v in pairs(m.Objects)do
+if r then
+local v=p.Objects[r]
+if v then
 ApplyTheme(v)
 end
-end
-end
-
-function m.SetLangForObject(p)
-if m.Localization and m.Localization.Enabled then
-local r=m.LocalizationObjects[p]
-if not r then return end
-
-local u=r.Object
-local v=r.TranslationId
-
-local x=m.Localization.Translations[m.Language]
-if x and x[v]then
-u.Text=x[v]
 else
-local z=m.Localization and m.Localization.Translations and m.Localization.Translations.en or nil
-if z and z[v]then
-u.Text=z[v]
+for v,x in pairs(p.Objects)do
+ApplyTheme(x)
+end
+end
+end
+
+function p.SetLangForObject(r)
+if p.Localization and p.Localization.Enabled then
+local u=p.LocalizationObjects[r]
+if not u then return end
+
+local v=u.Object
+local x=u.TranslationId
+
+local z=p.Localization.Translations[p.Language]
+if z and z[x]then
+v.Text=z[x]
 else
-u.Text="["..v.."]"
+local A=p.Localization and p.Localization.Translations and p.Localization.Translations.en or nil
+if A and A[x]then
+v.Text=A[x]
+else
+v.Text="["..x.."]"
 end
 end
 end
 end
 
-function m.ChangeTranslationKey(p,r,u)
-if m.Localization and m.Localization.Enabled then
-local v=string.match(u,"^"..m.Localization.Prefix.."(.+)")
-if v then
-for x,z in ipairs(m.LocalizationObjects)do
-if z.Object==r then
-z.TranslationId=v
-m.SetLangForObject(x)
+function p.ChangeTranslationKey(r,u,v)
+if p.Localization and p.Localization.Enabled then
+local x=string.match(v,"^"..p.Localization.Prefix.."(.+)")
+if x then
+for z,A in ipairs(p.LocalizationObjects)do
+if A.Object==u then
+A.TranslationId=x
+p.SetLangForObject(z)
 return
 end
 end
 
-table.insert(m.LocalizationObjects,{
-TranslationId=v,
-Object=r
+table.insert(p.LocalizationObjects,{
+TranslationId=x,
+Object=u
 })
-m.SetLangForObject(#m.LocalizationObjects)
+p.SetLangForObject(#p.LocalizationObjects)
 end
 end
 end
 
-function m.UpdateLang(p)
-if p then
-m.Language=p
+function p.UpdateLang(r)
+if r then
+p.Language=r
 end
 
-for r=1,#m.LocalizationObjects do
-local u=m.LocalizationObjects[r]
-if u.Object and u.Object.Parent~=nil then
-m.SetLangForObject(r)
+for u=1,#p.LocalizationObjects do
+local v=p.LocalizationObjects[u]
+if v.Object and v.Object.Parent~=nil then
+p.SetLangForObject(u)
 else
-m.LocalizationObjects[r]=nil
+p.LocalizationObjects[u]=nil
 end
 end
 end
 
-function m.SetLanguage(p)
-m.Language=p
-m.UpdateLang()
+function p.SetLanguage(r)
+p.Language=r
+p.UpdateLang()
 end
 
-function m.Icon(p)
-return j.Icon(p)
+function p.Icon(r,u)
+return l.Icon2(r,nil,u~=false)
 end
 
-function m.AddIcons(p,r)
-return j.AddIcons(p,r)
+function p.AddIcons(r,u)
+return l.AddIcons(r,u)
 end
 
-function m.New(p,r,u)
-local v=Instance.new(p)
+function p.New(r,u,v)
+local x=Instance.new(r)
 
-for x,z in next,m.DefaultProperties[p]or{}do
-v[x]=z
-end
-
-for A,B in next,r or{}do
-if A~="ThemeTag"then
-v[A]=B
-end
-if m.Localization and m.Localization.Enabled and A=="Text"then
-local C=string.match(B,"^"..m.Localization.Prefix.."(.+)")
-if C then
-local F=#m.LocalizationObjects+1
-m.LocalizationObjects[F]={TranslationId=C,Object=v}
-
-m.SetLangForObject(F)
-end
-end
+for z,A in next,p.DefaultProperties[r]or{}do
+x[z]=A
 end
 
-for C,F in next,u or{}do
-F.Parent=v
+for B,C in next,u or{}do
+if B~="ThemeTag"then
+x[B]=C
 end
+if p.Localization and p.Localization.Enabled and B=="Text"then
+local F=string.match(C,"^"..p.Localization.Prefix.."(.+)")
+if F then
+local G=#p.LocalizationObjects+1
+p.LocalizationObjects[G]={TranslationId=F,Object=x}
 
-if r and r.ThemeTag then
-m.AddThemeObject(v,r.ThemeTag)
+p.SetLangForObject(G)
 end
-if r and r.FontFace then
-m.AddFontObject(v)
-end
-return v
-end
-
-function m.Tween(p,r,u,...)
-return f:Create(p,TweenInfo.new(r,...),u)
-end
-
-function m.NewRoundFrame(p,r,u,v,A,B)
-local function getImageForType(C)
-return C=="Squircle"and"rbxassetid://80999662900595"
-or C=="SquircleOutline"and"rbxassetid://117788349049947"
-or C=="SquircleOutline2"and"rbxassetid://117817408534198"
-or C=="Squircle-Outline"and"rbxassetid://117817408534198"
-or C=="Shadow-sm"and"rbxassetid://84825982946844"
-or C=="Squircle-TL-TR"and"rbxassetid://73569156276236"
-or C=="Squircle-BL-BR"and"rbxassetid://93853842912264"
-or C=="Squircle-TL-TR-Outline"and"rbxassetid://136702870075563"
-or C=="Squircle-BL-BR-Outline"and"rbxassetid://75035847706564"
-or C=="Square"and"rbxassetid://82909646051652"
-or C=="Square-Outline"and"rbxassetid://72946211851948"
-end
-
-local function getSliceCenterForType(C)
-return C~="Shadow-sm"and Rect.new(256
-,256
-,256
-,256
-
-)or Rect.new(512,512,512,512)
-end
-
-local C=m.New(A and"ImageButton"or"ImageLabel",{
-Image=getImageForType(r),
-ScaleType="Slice",
-SliceCenter=getSliceCenterForType(r),
-SliceScale=1,
-BackgroundTransparency=1,
-ThemeTag=u.ThemeTag and u.ThemeTag
-},v)
-
-for F,G in pairs(u or{})do
-if F~="ThemeTag"then
-C[F]=G
 end
 end
 
-local function UpdateSliceScale(H)
-local J=r~="Shadow-sm"and(H/(256))or(H/512)
-C.SliceScale=math.max(J,0.0001)
+for F,G in next,v or{}do
+G.Parent=x
 end
 
-local H={}
-
-function H.SetRadius(J,L)
-UpdateSliceScale(L)
+if u and u.ThemeTag then
+p.AddThemeObject(x,u.ThemeTag)
+end
+if u and u.FontFace then
+p.AddFontObject(x)
+end
+return x
 end
 
-function H.SetType(J,L)
-r=L
-C.Image=getImageForType(L)
-C.SliceCenter=getSliceCenterForType(L)
-UpdateSliceScale(p)
+function p.Tween(r,u,v,...)
+return f:Create(r,TweenInfo.new(u,...),v)
 end
 
-function H.UpdateShape(J,L,M)
-if M then
-r=M
-C.Image=getImageForType(M)
-C.SliceCenter=getSliceCenterForType(M)
-end
-if L then
-p=L
-end
-UpdateSliceScale(p)
+function p.NewRoundFrame(r,u,v,x,B,C)
+local function getImageForType(F)
+return p.Shapes[F]
 end
 
-function H.GetRadius(J)
-return p
-end
-
-function H.GetType(J)
-return r
-end
-
-UpdateSliceScale(p)
-
-return C,B and H or nil
-end
-
-local p=m.New local r=
-m.Tween
-
-function m.SetDraggable(u)
-m.CanDraggable=u
-end
-
-
-
-function m.Drag(u,v,A)
-local B
-local C,F,G
-local H={
-CanDraggable=true
-}
-
-if not v or type(v)~="table"then
-v={u}
-end
-
-local function update(J)
-if not C or not H.CanDraggable then return end
-
-local L=J.Position-F
-m.Tween(u,0.02,{Position=UDim2.new(
-G.X.Scale,G.X.Offset+L.X,
-G.Y.Scale,G.Y.Offset+L.Y
-)}):Play()
-end
-
-for J
+local function ge
